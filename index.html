@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" type="text/css" href="css/notas.css" />
+  <title>Ficha de Seguimiento</title>
+
+	<style>
+	 /*
+	 MediumSlateBlue #7B68EE
+	 CornflowerBlue #6495ED
+	 LightSteelBlue #B0C4DE 
+	 LightSkyBlue	#87CEFA
+	 
+	 */
+	 
+	table {
+		display: table;
+		border-collapse: separate;
+		width: 100%;
+		border: 2px solid gray;
+		border-color: MediumSlateBlue;
+		border-spacing: 3px;
+		text-align:center;
+	}
+
+	th {
+		border: 1px solid gray;
+		border-color: RoyalBlue; /* PowderBlue RoyalBlue SkyBlue LightSteelBlue */
+		background-color: RoyalBlue;
+		padding: 3px;
+		color: White;
+	}
+	td {
+		border: 1px solid gray;
+		border-color: RoyalBlue; /* PowderBlue RoyalBlue */
+		/* background-color: PowderBlue; */
+		padding: 4px;
+	}
+
+	</style>
+
+
+</head>
+
+<body>
+  <div class="header">
+    <h1>Ficha de Seguimiento</h1>
+  </div>
+
+  <div class="note-editor" id="note-editor">
+	Fecha:<br>
+	<input class="qfecha" type="date" name="qfecha" id="qfecha" placeholder="dd/mm/aaaa" required />
+    <br>Peso:<br>
+	<input class="qpeso" type="number" name="qpeso" id="qpeso" placeholder="kg." required />
+    <br>IMC (Indice Masa Corporal):<br>
+	<input class="qtbaja" type="number" name="qtbaja" id="qtbaja" placeholder="indice." required />
+    <br>Perímetro Cintura:<br>
+	<input class="qtalta" type="number" name="qtalta" id="qtalta" placeholder="cm." required />
+    <br><br>
+    <button class="BotonA1" id="salvar">Guardar</button>
+	&nbsp &nbsp
+	<button class="BotonAm" id="cancelar">Cancelar</button>
+	&nbsp &nbsp
+	<button class="BotonR" id="eliminar">Borrar</button>
+  </div>  
+
+  <div id="notes-list-botones" class="notes-list-botones">
+	<div id="notes-botonera" id="notes-botonera" >
+	<button class="BotonV" id="anadir">Añadir DATOS</button>
+	&nbsp &nbsp
+	<button class="BotonR" id="limpiar">Borrar TODO</button>
+	</div>
+  </div>
+
+  <div class="notes-list-container">
+	<div class="notes-list" id="notes-list">
+    </div>
+  </div>
+
+  <footer class="footer">
+	<span class="aviso">Hacer <b>'clic'</b> en la linea a modificar.</span>
+	<h4> Diseño: &nbsp Amparo.Te.Asesora </h4>
+  </footer>
+  
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/fastclick.js"></script>
+  <script type="text/javascript" src="js/notes.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+
+</body>
+
+</html>
