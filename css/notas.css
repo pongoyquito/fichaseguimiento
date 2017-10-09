@@ -1,0 +1,146 @@
+body {
+  /* LightYellow #FFFFE0
+	 Navy #000080  MidnightBlue #191970  DarkBlue #00008B  RoyalBlue #4169E1 */
+	background-color: white;
+	color: Navy;
+	font-family: Verdana, Arial, Tahoma;
+	font-size: 11pt;
+}
+
+input {
+	color: RoyalBlue;
+	/*font-weight: bold;*/
+	font-family: Verdana, Arial, Tahoma;
+	font-size: 13pt;
+}
+
+.notes-list-container {
+  padding: 2px;
+}
+
+.notes-list-botones {
+  height: 60px;
+  /*IMPORTANTE*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notes-list {
+  margin-bottom: 10px;
+}
+
+.note-item {
+  margin-top: 2px;
+  background: AliceBlue;  /* LightCyan #E0FFFF   AliceBlue #F0F8FF */
+  border: 1px solid black;  
+}
+
+.note-editor {
+  display: none;
+  padding: 10px;
+  background: Lavender;  /* Lavender #E6E6FA */
+  border: 1px solid blue;
+  border-spacing: 5px;
+  /*
+  z-index: 99;
+  position: absolute;
+  left: 3px;
+  top: 70px;
+  width: 92%;
+  height: 98%;
+ */
+}
+
+/*
+.qfecha {
+  width: 100%;
+}
+*/
+
+.comentario{
+  width:100%;
+  height: 100px;
+}
+
+.footer {
+  padding: 1px;
+  color: RoyalBlue;
+  /*font-style:italic;*/
+  text-align: center;
+}
+
+.header {
+  padding: 0 10px;
+  color: RoyalBlue;
+  text-align: center;
+  height: 48.4px;
+  line-height:48.4px;
+}
+
+.aviso {
+	color: DodgerBlue;
+}
+
+/* ------------------------- ETIQUETAS PARA  BOTONES (10pt) ----------------------- */
+
+.BotonA1 {
+		cursor: pointer;
+		font-family: Verdana, Arial, Tahoma;
+	 	font-size: 11pt;
+		font-weight: bold;
+		color: #00759A;
+		background-color: #FFFFD5;
+		border: 1px solid #888888;
+		padding: 5px;
+		border-radius: 10px;
+		}		
+
+.BotonA2 {
+		cursor: pointer;
+		font-family: Verdana, Arial, Tahoma;
+	 	font-size: 11pt;
+		font-weight: bold;
+		color: #09D0FF;
+		background-color: #FFFFD5;
+		border: 1px solid #888888;
+		padding: 5px;
+		border-radius: 10px;
+		}		
+
+.BotonAm {
+		cursor: pointer;
+		font-family: Verdana, Arial, Tahoma;
+	 	font-size: 11pt;
+		font-weight: bold;
+		color: #BB650E;
+		background-color: #FFFFD5;
+		border: 1px solid #888888;
+		padding: 5px;
+		border-radius: 10px;
+		}		
+
+.BotonV {
+		cursor: pointer;
+		font-family: Verdana, Arial, Tahoma;
+	 	font-size: 11pt;
+		font-weight: bold;
+		color: #009900;
+		background-color: #FFFFD5;
+		border: 1px solid #888888;
+		padding: 5px;
+		border-radius: 10px;
+		}		
+
+.BotonR {
+		cursor: pointer;
+		font-family: Verdana, Arial, Tahoma;
+	 	font-size: 11pt;
+		font-weight: bold;
+		color: #993366;
+		background-color: #FFFFD5;
+		border: 1px solid #888888;
+		padding: 5px;
+		border-radius: 10px;
+		}		
+
