@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<widget id="com.phonegap.ficha.de.seguimiento"
+		version="1.0.0" 
+		xmlns="http://www.w3.org/ns/widgets" 
+		xmlns:gap="http://phonegap.com/ns/1.0">
+		
+    <name>Ficha-de-Seguimiento</name>
+	
+    <description>
+        Ficha de Seguimiento: Ficha de seguimiento personal para tomar nota de nuestro peso y cintura a través del tiempo.
+    </description>
+	
+    <author email="support@phonegap.com" 
+			href="http://phonegap.com">
+			PongoyQuito
+    </author>
+
+    <!-- Define app icon for each platform. -->
+	        <!--
+            ldpi    : 36x36 px
+            mdpi    : 48x48 px
+            hdpi    : 72x72 px
+            xhdpi   : 96x96 px
+            xxhdpi  : 144x144 px
+            xxxhdpi : 192x192 px
+        -->
+    <icon src="icon.png" />
+    <icon src="res/icon/android/icon-36-ldpi.png"   gap:platform="android"    gap:qualifier="ldpi" />
+    <icon src="res/icon/android/icon-48-mdpi.png"   gap:platform="android"    gap:qualifier="mdpi" />
+    <icon src="res/icon/android/icon-72-hdpi.png"   gap:platform="android"    gap:qualifier="hdpi" />
+    <icon src="res/icon/android/icon-96-xhdpi.png"  gap:platform="android"    gap:qualifier="xhdpi" />
+
+    <!--
+		Opcional <content>
+		elemento define la página de inicio de la aplicación en el directorio web de alto nivel de activos.
+		El valor predeterminado es index.html, que habitualmente aparece en el directorio de nivel superior www de un proyecto.
+	-->
+    <content src="index.html" />
+
+    <!--
+        Define access to external domains.
+        <access origin="*" /> - Etiqueta de acceso comodín: permite el acceso a todos los recursos externos.
+    -->
+    <access origin="*" />
+
+    <!-- Plugins -->
+    <!-- Core plugins -->
+    <plugin name="cordova-plugin-file"/>
+	<plugin name="cordova-plugin-whitelist"/>
+    <plugin name="cordova-plugin-device-motion"/>
+
+</widget>
