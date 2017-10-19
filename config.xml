@@ -21,7 +21,7 @@
     <preference name="fullscreen"                 value="false" />           <!-- all: TRUE hides the status bar at the top of the screen -->
 
     <!-- Define app icon for each platform. -->
-    <icon src="icon.png" />
+  
     <!-- 
    <icon src = "res/icon/android/drawable-ldpi/tp_icon.png" 
       gap:platform = "android" gap:qualifier = "ldpi" />
