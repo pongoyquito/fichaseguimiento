@@ -71,11 +71,19 @@ input {
 }
 
 .header {
-  padding: 0 10px;
+  padding: 0px 0px;
   color: RoyalBlue;
   text-align: center;
-  height: 48.4px;
+  background-color: AliceBlue;
+  /*
+   height: 48.4px;
   line-height:48.4px;
+  border: 1px solid black;
+  */
+}
+
+h1,h4{
+	border-bottom: 1px solid DodgerBlue;
 }
 
 .aviso {
