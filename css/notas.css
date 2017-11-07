@@ -14,31 +14,82 @@ input {
 	font-size: 13pt;
 }
 
-.notes-list-container {
-  padding: 2px;
+ /*
+ MediumSlateBlue #7B68EE
+ CornflowerBlue #6495ED
+ LightSteelBlue #B0C4DE 
+ LightSkyBlue	#87CEFA
+ 
+ */
+ 
+table {
+	display: table;
+	border-collapse: separate;
+	width: 100%;
+	border: 2px solid gray;
+	border-color: MediumSlateBlue;
+	border-spacing: 3px;
+	text-align:center;
 }
 
-.notes-list-botones {
-  height: 60px;
-  /*IMPORTANTE*/
+th {
+	border: 1px solid gray;
+	border-color: RoyalBlue; /* PowderBlue RoyalBlue SkyBlue LightSteelBlue */
+	background-color: RoyalBlue;
+	padding: 3px;
+	color: White;
+}
+td {
+	border: 1px solid gray;
+	border-color: RoyalBlue; /* PowderBlue RoyalBlue */
+	/* background-color: PowderBlue; */
+	padding: 4px;
+}
+
+.tabla-cabeza {
+		display: table;
+		border-collapse: separate;
+		width: 100%;
+		border: 1px solid gray;
+		border-color: MediumSlateBlue;
+		border-spacing: 0px;
+		text-align:center;
+		font-size: 12pt;
+}
+.tabla-cabeza td{
+		border: 0px solid gray;
+		border-color: RoyalBlue; /* PowderBlue RoyalBlue */
+		background-color: AliceBlue;
+		padding: 4px;
+}
+
+
+.lista-registros-caja {
+  padding: 1px;
+}
+
+.lista-botones-caja {
+   margin: 15px 5px 10px 5px; /* Exterior: arriba derecha abajo izquierda */
+  /*IMPORTANTE height: 60px; */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.notes-list {
-  margin-bottom: 10px;
+.lista-registros {
+  margin-bottom: 2px;
 }
 
-.note-item {
+.registro-item {
   margin-top: 2px;
   background: AliceBlue;  /* LightCyan #E0FFFF   AliceBlue #F0F8FF */
   border: 1px solid black;  
 }
 
-.note-editor {
+.editor-registro {
   display: none;
-  padding: 10px;
+  margin: 20px 5px 20px 5px; /* Exterior: arriba derecha abajo izquierda */
+  padding: 10px;  /* Interior: arriba derecha abajo izquierda */
   background: Lavender;  /* Lavender #E6E6FA */
   border: 1px solid blue;
   border-spacing: 5px;
@@ -50,6 +101,15 @@ input {
   width: 92%;
   height: 98%;
  */
+}
+
+.editor-registro-cab {
+  display: none;
+  margin: 20px 5px 20px 5px; /* Exterior: arriba derecha abajo izquierda */
+  padding: 10px;  /* Interior: arriba derecha abajo izquierda */
+  background: Lavender;  /* Lavender #E6E6FA */
+  border: 1px solid blue;
+  border-spacing: 5px;
 }
 
 /*
@@ -64,14 +124,14 @@ input {
 }
 
 .footer {
-  padding: 1px;
+  padding: 0px;
   color: RoyalBlue;
   /*font-style:italic;*/
   text-align: center;
 }
 
 .header {
-  padding: 0px 0px;
+  padding: 0px ;
   color: RoyalBlue;
   text-align: center;
   background-color: AliceBlue;
