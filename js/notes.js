@@ -1,15 +1,21 @@
 
-//====[Bloque Funciones: definicion]========================
+//*********************************************************
+//---- [ Bloque FUNCIONES: dentro del objeto "app" ] -----
+//*********************************************************
 //
 //--- Objeto array
 //--- "notas": [{"qfecha": "12/01/2017", "qpeso": "58,73", "qtbaja": "7.8", "qtalta": "12.8"}]
 
 var app = {
 
+	//------- Objeto array LISTA de registros -------
+	
 	model: {
 		"notas": []
 	},
 
+	//------- Acceso a firebase de Google -------
+	
 	firebaseConfig: {
 		apiKey: "AIzaSyC1Q571CyJF45XczMRhFqbyC4dSr8h95xc",
 		authDomain: "libreta-nota.firebaseapp.com",
@@ -19,10 +25,20 @@ var app = {
 		messagingSenderId: "476197797154"
 	},
   
+	//------- Bloque: INICIO de objeto App -------
+	
 	inicio: function(){
 		this.iniciaFastClick();
 		this.iniciaBotones();
 		this.refrescarLista();
+
+		if (localStorage.length < 1) {
+			//-- Limpiar.
+			localStorage.clear();
+			//-- Iniciar.
+			app.IniciarLocalStorage();
+		}
+		app.MostrarLocalStorage();
 	},
 
 	iniciaFastClick: function() {
@@ -39,12 +55,19 @@ var app = {
 		var eliminar = document.querySelector('#eliminar');
 		var anadir = document.querySelector('#anadir');
 		var limpiar = document.querySelector('#limpiar');
+
+		var cancelarCb = document.querySelector('#cancelarCb');
+		var salvarCb = document.querySelector('#salvarCb');
 	
 		anadir.addEventListener('click' ,this.mostrarEditor, false);
-		salvar.addEventListener('click' ,this.salvarNota, false);
-		cancelar.addEventListener('click' ,this.cancelarNota, false);
-		eliminar.addEventListener('click' ,this.eliminarNota, false);
+		salvar.addEventListener('click' ,this.salvarRegistro, false);
+		cancelar.addEventListener('click' ,this.cancelarRegistro, false);
+		eliminar.addEventListener('click' ,this.eliminarRegistro, false);
 		limpiar.addEventListener('click' ,this.limpiarFichero, false);
+
+		cancelarCb.addEventListener('click' ,this.ocultarEditorCab, false);
+		salvarCb.addEventListener('click' ,this.salvarRegistroCab, false);
+
 	},
 
 	limpiarFichero: function() {
@@ -59,17 +82,17 @@ var app = {
 		}	
 	},
 
-	cancelarNota: function() {
+	cancelarRegistro: function() {
 		app.mostrarEditor();
 		app.ocultarEditor();
 	},
 
-	eliminarNota: function() {
+	eliminarRegistro: function() {
 		var responde = confirm("¿ Desea BORRAR el registro ?");
 		if (responde == true) {
 			//--- Ok. 
 			document.getElementById('qfecha').value = '';
-			app.salvarNota();
+			app.salvarRegistro();
 		} else {
 			//-- Cancelar.
 		}	
@@ -81,13 +104,17 @@ var app = {
 		document.getElementById('qpeso').value = "";
 		document.getElementById('qtbaja').value = "";
 		document.getElementById('qtalta').value = "";
-		document.getElementById("note-editor").style.display = "block";
+		document.getElementById("editor-registro").style.display = "block";
 		document.getElementById('qfecha').focus();
 		
-		document.getElementById("notes-botonera").style.display = "none";
+		document.getElementById("lista-botonera").style.display = "none";
 	},
 
-	salvarNota: function() {
+	salvarRegistro: function() {
+		if ( localStorage.getItem("Altura") > 0 ) {
+			document.getElementById('qtbaja').value = CalcularIMC(document.getElementById('qpeso').value , localStorage.getItem("Altura"));
+		}
+
 		if (QueAccion == "M"){
 			//alert('MODIFICAR');
 			eval("app.model." + QueFila + ".qfecha = '" + document.getElementById('qfecha').value + "'");
@@ -114,7 +141,7 @@ var app = {
 	refrescarLista: function() {
 		app.ordenarLista();
 		//-- refrescar ...
-		var div=document.getElementById('notes-list');
+		var div=document.getElementById('lista-registros');
 		div.innerHTML = this.anadirNotasALista();
 	},
 
@@ -156,8 +183,8 @@ var app = {
 	},
 
 	anadirNota: function(id, qfecha) {
-		/// "<div class='note-item' id='notas[" + id + "]' onclick=app.clicFila(this) >" + qfecha + "</div>";
-	return "<tr class='note-item' id='notas[" + id + "]' onclick=app.clicFila(this) >" + qfecha + "</tr>";
+		/// "<div class='registro-item' id='notas[" + id + "]' onclick=app.clicFila(this) >" + qfecha + "</div>";
+	return "<tr class='registro-item' id='notas[" + id + "]' onclick=app.clicFila(this) >" + qfecha + "</tr>";
 	},
 
 	//-----------------------------------------------------
@@ -185,8 +212,8 @@ var app = {
 	},
 
 	ocultarEditor: function() {
-		document.getElementById("note-editor").style.display = "none";
-		document.getElementById("notes-botonera").style.display = "";
+		document.getElementById("editor-registro").style.display = "none";
+		document.getElementById("lista-botonera").style.display = "";
 	},
 
 	clicFila: function(fila) {
@@ -207,7 +234,7 @@ var app = {
 	//--- cordova.file. dataDirectory
 	//-----------------------------------------------------
 	
-	//------- Bloque: ESCRIBIR DATOS -------
+	//------- Bloque: ESCRIBIR DATOS en fichero -------
 	
 	grabarDatos: function() {
 		window.resolveLocalFileSystemURL( cordova.file.externalApplicationStorageDirectory , this.gotFS, this.fail);
@@ -253,7 +280,7 @@ var app = {
 		ref.putString(JSON.stringify(app.model));
 	},
 	
-	//------- Bloque: LEER DATOS -------
+	//------- Bloque: LEER DATOS  en fichero -------
 	
 	leerDatos: function() {
 		window.resolveLocalFileSystemURL( cordova.file.externalApplicationStorageDirectory , this.obtenerFS, this.fail);
@@ -292,10 +319,8 @@ var app = {
         reader.readAsText(file);
     },
 
-	
 	//------- Bloque: BORRAR FICHERO -------
 			
-	
 	borrarFichero: function() {
 		window.resolveLocalFileSystemURL( cordova.file.externalApplicationStorageDirectory , this.borrarFS, this.fail);
 	},
@@ -309,74 +334,156 @@ var app = {
         fileEntry.remove( function(){console.log('Fichero borrado.')}, app.fail);
     },
 	
-	//------- Bloque: ERROR DATOS -------
+	//------- Bloque: ERROR DATOS en fichero -------
 			
 	fail: function(error) {
 		console.log(error.code);
 	},
-	
-		//------- FINAL -------
-};
 
-//====[Bloque Principal: Arranque]========================
+	
+	//------- Bloque: CABECERA de lista -------
 
-var QueAccion = '=';
-var QueFila = '';
-var QueIndice = '';
-
-function fechaHoy() {
-	//--- Obtener cadena con la fecha de hoy.
-	//----------------------------------------
-	var date = new Date();
-	
-	//--- Luego le sacamos los datos any, dia, mes 
-	//--- y numero de dia de la variable date
-	var any = date.getFullYear();
-	var mes = date.getMonth();
-	var ndia = date.getDate();
-	
-	//--- Damos a los dias y meses el valor en número
-	mes+=1;
-	if(mes<10) mes="0"+mes;
-	if(ndia<10) ndia="0"+ndia;
-	
-	//--- Juntamos todos los datos en una variable
-	var fecha = ndia + "/" + mes + "/" + any;
-	var fecha =  any + "-" + mes + "-" + ndia;
-	
-	//--- resultado.
-	return fecha;
-};
-
-function mostrarFecha(Qfecha) {
-	//--- Mostrar fecha dd/mm/aaaa.
-	//----------------------------------------
+	mostrarCabecera: function() {
+		//alert('pulsado boton');
+		document.getElementById('cbaltura').value = localStorage.getItem("Altura");
+		document.getElementById("editor-registro-cab").style.display = "block";
+		document.getElementById('cbaltura').focus();
 		
-	//--- Sacamos los datos any, dia, mes 
-	//--- y numero de dia de la variable date
-	var lista = Qfecha.split("-");
-	var any = lista[0];
-	var mes = lista[1];
-	var ndia = lista[2];
+		document.getElementById("lista-botonera").style.display = "none";
+	},
+
+	ocultarEditorCab: function() {
+		document.getElementById("editor-registro-cab").style.display = "none";
+		document.getElementById("lista-botonera").style.display = "";
+	},
+
 	
-	//--- Damos a los dias y meses el valor en número
-	//mes+=1;
-	//if(mes<10) mes="0"+mes;
-	//if(ndia<10) ndia="0"+ndia;
+	salvarRegistroCab: function() {
+		localStorage.setItem("Altura", document.getElementById('cbaltura').value );
+		app.MostrarLocalStorage();
+		app.ocultarEditorCab();
+		app.refrescarListaIMC();
+		app.refrescarLista();
+		app.grabarDatos();
+	},
+
+	refrescarListaIMC: function() {
+		var notas = this.model.notas;
+
+		if ( localStorage.getItem("Altura") > 0 ) {
+			for (var i in notas) {
+				notas[i].qtbaja = CalcularIMC( notas[i].qpeso, localStorage.getItem("Altura"));
+			}
+		}
+	},
+
+	IniciarLocalStorage: function() { 
+		localStorage.setItem("Altura", "" );
+		/*
+		localStorage.setItem("Nacido", "2017-12-27"); 
+		localStorage.setItem("Edad", "56"); 
+		localStorage.setItem("Sexo", "H"); 
+		*/
+	},
 	
-	//--- Juntamos todos los datos en una variable
-	var fecha = ndia + "/" + mes + "/" + any;
-	
-	//--- resultado.
-	return fecha;
+	MostrarLocalStorage: function() { 
+		var span=document.getElementById('ver-altura');
+		span.innerHTML = localStorage.getItem("Altura");
+	},
+
+	//------- FINAL -------
 };
 
+//*********************************************************
+//---------- [ Bloque Principal: Arranque ] ---------------
+//*********************************************************
 
-if('addEventListener' in document){
-	  document.addEventListener('deviceready', function() {
-		    //app.inicio();
-			app.iniciaFirebase();
-			app.leerDatos();
-	}, false);
-};
+	var QueAccion = '=';
+	var QueFila = '';
+	var QueIndice = '';
+	var localStorage = window.localStorage;
+
+	if('addEventListener' in document){
+		  document.addEventListener('deviceready', function() {
+				//app.inicio();
+				app.iniciaFirebase();
+				app.leerDatos();
+		}, false);
+	};
+
+//=========================================================
+//-------------- [ Funciones Generales ] ------------------
+//=========================================================
+
+	function fechaHoy() {
+		//--- Obtener cadena con la fecha de hoy.
+		//----------------------------------------
+		var date = new Date();
+		
+		//--- Luego le sacamos los datos any, dia, mes 
+		//--- y numero de dia de la variable date
+		var any = date.getFullYear();
+		var mes = date.getMonth();
+		var ndia = date.getDate();
+		
+		//--- Damos a los dias y meses el valor en número
+		mes+=1;
+		if(mes<10) mes="0"+mes;
+		if(ndia<10) ndia="0"+ndia;
+		
+		//--- Juntamos todos los datos en una variable
+		var fecha = ndia + "/" + mes + "/" + any;
+		var fecha =  any + "-" + mes + "-" + ndia;
+		
+		//--- resultado.
+		return fecha;
+	};
+
+	function mostrarFecha(Qfecha) {
+		//--- Mostrar fecha dd/mm/aaaa.
+		//----------------------------------------
+			
+		//--- Sacamos los datos any, dia, mes 
+		//--- y numero de dia de la variable date
+		var lista = Qfecha.split("-");
+		var any = lista[0];
+		var mes = lista[1];
+		var ndia = lista[2];
+		
+		//--- Damos a los dias y meses el valor en número
+		//mes+=1;
+		//if(mes<10) mes="0"+mes;
+		//if(ndia<10) ndia="0"+ndia;
+		
+		//--- Juntamos todos los datos en una variable
+		var fecha = ndia + "/" + mes + "/" + any;
+		
+		//--- resultado.
+		return fecha;
+	};
+
+	 function CalcularIMC(Peso,Talla)
+	//--------------------------------------------------------------------------
+	// 	IMC = Peso (kg.) / [ (Altura en m.) * (Altura en m.) ]  
+	////////////////////////////////////////////////////////////////////////////
+	{
+		var Resultado,PIdeal;
+		Resultado = 0;
+
+		if ( (Peso == 'undefined') || (Peso == null) ) { Peso = 0;}
+		if ( (Talla == 'undefined') || (Talla == null) ) { Talla = 0;}
+
+		if ( isNaN(Peso) || isNaN(Talla) )
+		{
+			Resultado = 0;
+		} else {
+			if (  Talla > 0 )
+			{
+				Resultado = ( Peso / ((Talla * Talla) * 0.0001) )  ;
+			}
+		}
+
+		Resultado = Resultado.toFixed(2);
+		return Resultado;
+	};
 
