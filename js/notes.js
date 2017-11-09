@@ -4,14 +4,15 @@
 //*********************************************************
 //
 //--- Objeto array
-//--- "notas": [{"qfecha": "12/01/2017", "qpeso": "58,73", "qtbaja": "7.8", "qtalta": "12.8"}]
+//--- "registres": [{"qfecha": "12/01/2017", "qpeso": "58,73", "qimc": "7.8", "qcinta": "12.8"}]
 
 var app = {
 
 	//------- Objeto array LISTA de registros -------
+	//  
 	
 	model: {
-		"notas": []
+		"registres": []
 	},
 
 	//------- Acceso a firebase de Google -------
@@ -30,6 +31,7 @@ var app = {
 	inicio: function(){
 		this.iniciaFastClick();
 		this.iniciaBotones();
+		this.revisarVersion();
 		this.refrescarLista();
 
 		if (localStorage.length < 1) {
@@ -70,12 +72,50 @@ var app = {
 
 	},
 
+	revisarVersion: function() {
+		//
+		//--- Para version 1.0.1 ---
+		///////////////////////////////////////////////////
+		var mimodel = this.model;
+		
+		if( mimodel.hasOwnProperty('registres') ) {
+			// La propiedad existe, sea cual sea su valor
+			delete mimodel.notas ;
+		} else {
+			// La propiedad NO existe, sea cual sea su valor
+			mimodel.registres = mimodel.notas ;
+			delete mimodel.notas ;
+		}
+
+		var registres = this.model.registres;		
+
+		for (var i in registres) {
+			if( registres[i].hasOwnProperty('qimc') ) {
+				// La propiedad existe, sea cual sea su valor
+				delete registres[i].qtbaja ;
+			} else {
+				// La propiedad NO existe, sea cual sea su valor
+				registres[i].qimc = registres[i].qtbaja ;
+				delete registres[i].qtbaja ;
+			}
+			if( registres[i].hasOwnProperty('qcinta') ) {
+				// La propiedad existe, sea cual sea su valor
+				delete registres[i].qtalta ;
+			} else {
+				// La propiedad NO existe, sea cual sea su valor
+				registres[i].qcinta = registres[i].qtalta ;
+				delete registres[i].qtalta ;
+			}
+		}
+		//---(fin)--
+	},
+	
 	limpiarFichero: function() {
 		var responde = confirm("¿ BORRAR TODOS los registros ?");
 		if (responde == true) {
 			//--- Ok. 
 			app.borrarFichero();
-			app.model.notas = [];
+			app.model.registres = [];
 			app.inicio();
 		} else {
 			//-- Cancelar.
@@ -102,8 +142,8 @@ var app = {
 		//alert('pulsado boton');
 		document.getElementById('qfecha').value = fechaHoy();
 		document.getElementById('qpeso').value = "";
-		document.getElementById('qtbaja').value = "";
-		document.getElementById('qtalta').value = "";
+		document.getElementById('qimc').value = "";
+		document.getElementById('qcinta').value = "";
 		document.getElementById("editor-registro").style.display = "block";
 		document.getElementById('qfecha').focus();
 		
@@ -112,23 +152,23 @@ var app = {
 
 	salvarRegistro: function() {
 		if ( localStorage.getItem("Altura") > 0 ) {
-			document.getElementById('qtbaja').value = CalcularIMC(document.getElementById('qpeso').value , localStorage.getItem("Altura"));
+			document.getElementById('qimc').value = CalcularIMC(document.getElementById('qpeso').value , localStorage.getItem("Altura"));
 		}
 
 		if (QueAccion == "M"){
 			//alert('MODIFICAR');
 			eval("app.model." + QueFila + ".qfecha = '" + document.getElementById('qfecha').value + "'");
 			eval("app.model." + QueFila + ".qpeso = '" + document.getElementById('qpeso').value + "'");
-			eval("app.model." + QueFila + ".qtbaja = '" + document.getElementById('qtbaja').value + "'");
-			eval("app.model." + QueFila + ".qtalta = '" + document.getElementById('qtalta').value + "'");
+			eval("app.model." + QueFila + ".qimc = '" + document.getElementById('qimc').value + "'");
+			eval("app.model." + QueFila + ".qcinta = '" + document.getElementById('qcinta').value + "'");
 			
 			if ( document.getElementById('qfecha').value === '') {
 				//-- Eliminar/Borrar elemento ..
-				app.model.notas.splice(QueIndice, 1);
+				app.model.registres.splice(QueIndice, 1);
 			};
 			
 		} else {
-			app.construirNota();
+			app.construirRegistre();
 		}
 		QueAccion = "=";
 		QueFila = "";
@@ -142,20 +182,20 @@ var app = {
 		app.ordenarLista();
 		//-- refrescar ...
 		var div=document.getElementById('lista-registros');
-		div.innerHTML = this.anadirNotasALista();
+		div.innerHTML = this.anadirRegistresALista();
 	},
 
 	ordenarLista: function() {
-		var notas = app.model.notas;
+		var registres = app.model.registres;
 
 		//-- orden ascendente numerico:
 		//-- cambiar signo en return para descendente).
 		//--
-		//-- notas.sort(function(a, b){return a.qpeso - b.qpeso}) ;
+		//-- registres.sort(function(a, b){return a.qpeso - b.qpeso}) ;
 		
 		//-- orden descendente alfanumerico:
 		//--
-		notas.sort( function(a, b){
+		registres.sort( function(a, b){
 			var x = a.qfecha.toLowerCase();
 			var y = b.qfecha.toLowerCase();
 			//-- cambiar signo para ascendente.
@@ -166,35 +206,35 @@ var app = {
 		);
 	},
 
-	anadirNotasALista: function() {
-		var notas = this.model.notas;
-		var notasDivs = '';
+	anadirRegistresALista: function() {
+		var registres = this.model.registres;
+		var registresDivs = '';
 		
-		notasDivs = "<table class='tabla' id='tabla'>";
-		notasDivs = notasDivs + "<tr><th>Fecha</th><th>Peso<br><small>(kg)</small></th><th>IMC.</th><th>Cintura<br><small>(cm)</small></th></tr>";
+		registresDivs = "<table class='tabla' id='tabla'>";
+		registresDivs = registresDivs + "<tr><th>Fecha</th><th>Peso<br><small>(kg)</small></th><th>IMC.</th><th>Cintura<br><small>(cm)</small></th></tr>";
 		
-		for (var i in notas) {
-			var qfecha = "<td>" + mostrarFecha( notas[i].qfecha ) + "</td><td>" + notas[i].qpeso + "</td><td>" + notas[i].qtbaja + "</td><td>" + notas[i].qtalta + "</td>";
-			notasDivs = notasDivs + this.anadirNota(i, qfecha);
+		for (var i in registres) {
+			var qfecha = "<td>" + mostrarFecha( registres[i].qfecha ) + "</td><td>" + registres[i].qpeso + "</td><td>" + registres[i].qimc + "</td><td>" + registres[i].qcinta + "</td>";
+			registresDivs = registresDivs + this.anadirRegistre(i, qfecha);
 		}
 		
-		notasDivs = notasDivs + "</table>";
-		return notasDivs;
+		registresDivs = registresDivs + "</table>";
+		return registresDivs;
 	},
 
-	anadirNota: function(id, qfecha) {
-		/// "<div class='registro-item' id='notas[" + id + "]' onclick=app.clicFila(this) >" + qfecha + "</div>";
-	return "<tr class='registro-item' id='notas[" + id + "]' onclick=app.clicFila(this) >" + qfecha + "</tr>";
+	anadirRegistre: function(id, qfecha) {
+		/// "<div class='registro-item' id='registres[" + id + "]' onclick=app.clicFila(this) >" + qfecha + "</div>";
+	return "<tr class='registro-item' id='registres[" + id + "]' onclick=app.clicFila(this) >" + qfecha + "</tr>";
 	},
 
 	//-----------------------------------------------------
 	
-	construirNota: function() {
-		var notas = app.model.notas;
+	construirRegistre: function() {
+		var registres = app.model.registres;
 		if ( document.getElementById('qfecha').value != '') {
 			//-- push() - añade al final
 			//-- unshift - añade al principio
-			notas.unshift({"qfecha": app.extraerQFecha(), "qpeso": app.extraerQPeso(), "qtbaja": app.extraerQTbaja(), "qtalta": app.extraerQTalta() });
+			registres.unshift({"qfecha": app.extraerQFecha(), "qpeso": app.extraerQPeso(), "qimc": app.extraerQIMC(), "qcinta": app.extraerQCintura() });
 		};
 	},
 
@@ -204,11 +244,11 @@ var app = {
 	extraerQPeso: function() {
 		return document.getElementById('qpeso').value;
 	},
-	extraerQTbaja: function() {
-		return document.getElementById('qtbaja').value;
+	extraerQIMC: function() {
+		return document.getElementById('qimc').value;
 	},
-	extraerQTalta: function() {
-		return document.getElementById('qtalta').value;
+	extraerQCintura: function() {
+		return document.getElementById('qcinta').value;
 	},
 
 	ocultarEditor: function() {
@@ -221,11 +261,11 @@ var app = {
 		app.mostrarEditor();
 		document.getElementById('qfecha').value = eval("app.model." + fila.id + ".qfecha");
 		document.getElementById('qpeso').value = eval("app.model." + fila.id + ".qpeso");
-		document.getElementById('qtbaja').value = eval("app.model." + fila.id + ".qtbaja");
-		document.getElementById('qtalta').value = eval("app.model." + fila.id + ".qtalta");
+		document.getElementById('qimc').value = eval("app.model." + fila.id + ".qimc");
+		document.getElementById('qcinta').value = eval("app.model." + fila.id + ".qcinta");
 		QueAccion = "M";
 		QueFila = fila.id;
-		QueIndice = QueFila.replace("notas[", "");
+		QueIndice = QueFila.replace("registres[", "");
 		QueIndice = QueIndice.replace("]", "");
 	},
 
@@ -259,10 +299,10 @@ var app = {
 			};
 		};
 
-		var notas = app.model.notas;
+		var registres = app.model.registres;
 		var todito = "";
-		for (var i in notas) {
-			var qfecha = notas[i].qfecha + "|" + notas[i].qpeso;
+		for (var i in registres) {
+			var qfecha = registres[i].qfecha + "|" + registres[i].qpeso;
 			todito = todito + qfecha + "@";
 		}
 		console.log(todito);
@@ -303,12 +343,12 @@ var app = {
 			/*
 				var lectura = data.split("@");
 
-				var notas = app.model.notas;
+				var registres = app.model.registres;
 				for (var i in lectura) {
 					var qfecha = lectura[i];
 					if (qfecha.length > 0) {
 						fistro = qfecha.split("|");
-						notas.push({"qfecha": fistro[0] , "qpeso": fistro[1] });
+						registres.push({"qfecha": fistro[0] , "qpeso": fistro[1] });
 					};
 				};
 			*/
@@ -368,11 +408,11 @@ var app = {
 	},
 
 	refrescarListaIMC: function() {
-		var notas = this.model.notas;
+		var registres = this.model.registres;
 
 		if ( localStorage.getItem("Altura") > 0 ) {
-			for (var i in notas) {
-				notas[i].qtbaja = CalcularIMC( notas[i].qpeso, localStorage.getItem("Altura"));
+			for (var i in registres) {
+				registres[i].qimc = CalcularIMC( registres[i].qpeso, localStorage.getItem("Altura"));
 			}
 		}
 	},
