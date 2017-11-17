@@ -69,11 +69,20 @@ td {
 }
 
 .lista-botones-caja {
-   margin: 15px 5px 10px 5px; /* Exterior: arriba derecha abajo izquierda */
-  /*IMPORTANTE height: 60px; */
+  margin: 15px 5px 10px 5px; /* Exterior: arriba derecha abajo izquierda */
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.lista-imc-cab {
+  margin: 3px 2px 10px 2px; /* Exterior: arriba derecha abajo izquierda */
+  padding: 5px 2px 5px 2px;  /* Interior: arriba derecha abajo izquierda */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: MediumBlue;  /* RoyalBlue */
+  background-color: AliceBlue;
 }
 
 .lista-registros {
@@ -93,14 +102,6 @@ td {
   background: Lavender;  /* Lavender #E6E6FA */
   border: 1px solid blue;
   border-spacing: 5px;
-  /*
-  z-index: 99;
-  position: absolute;
-  left: 3px;
-  top: 70px;
-  width: 92%;
-  height: 98%;
- */
 }
 
 .editor-registro-cab {
@@ -111,12 +112,6 @@ td {
   border: 1px solid blue;
   border-spacing: 5px;
 }
-
-/*
-.qfecha {
-  width: 100%;
-}
-*/
 
 .comentario{
   width:100%;
@@ -149,6 +144,7 @@ h1,h4{
 .aviso {
 	color: DodgerBlue;
 }
+
 
 /* ------------------------- ETIQUETAS PARA  BOTONES (10pt) ----------------------- */
 
