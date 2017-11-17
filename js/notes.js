@@ -226,12 +226,12 @@ var app = {
 					signo = 0;
 					signo = registres[0].qpeso - registres[1].qpeso;
 					if (signo < 0) {
-						signo = "▼";
+						signo = String.fromCharCode(31);
 					} else {
 						if (signo > 0) {
-							signo = "▲";
+							signo =  String.fromCharCode(30);
 						} else {
-							signo = "«";
+							signo =  String.fromCharCode(174);
 						}
 					}
 				}
