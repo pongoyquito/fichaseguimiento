@@ -52,7 +52,7 @@
 
     <!-- Plugins -->
     <!-- Core plugins -->
-    <plugin name="cordova-plugin-file"/>
+    <plugin name="cordova-plugin-file" spec="4.3.3"/>
 	<plugin name="cordova-plugin-whitelist"/>
     <plugin name="cordova-plugin-device-motion"/>
 
