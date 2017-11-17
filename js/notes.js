@@ -219,7 +219,7 @@ var app = {
 		registresDivs = registresDivs + "<tr><th>Fecha</th><th>Peso<br><small>(kg)</small></th><th>IMC.</th><th>Cintura<br><small>(cm)</small></th></tr>";
 		
 		for (var i in registres) {
-			
+			/*
 			signo = "";
 			if (i==0) {
 				if (registres.length > 1){
@@ -236,7 +236,7 @@ var app = {
 					}
 				}
 			}
-			
+			*/
 			var qfecha = "<td>" + mostrarFecha( registres[i].qfecha ) + "</td><td>"  + signo + registres[i].qpeso + "</td><td>" + registres[i].qimc + "</td><td>" + registres[i].qcinta + "</td>";
 			registresDivs = registresDivs + this.anadirRegistre(i, qfecha);
 		}
