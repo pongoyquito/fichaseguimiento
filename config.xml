@@ -50,11 +50,10 @@
     -->
     <access origin="*" />
 
-	
     <!-- Plugins -->
     <!-- Core plugins -->
     <plugin name="cordova-plugin-file" spec="4.3.3" />
 	<plugin name="cordova-plugin-whitelist"/> <!-- spec="1.3.3" -->
-    
+    <plugin name="cordova-plugin-device-motion"/> <!-- spec="2.0.0" -->
 
 </widget>
