@@ -148,6 +148,16 @@ var app = {
 		document.getElementById('qfecha').focus();
 		
 		document.getElementById("lista-botonera").style.display = "none";
+
+		if ( localStorage.getItem("Altura") > 0 ) {
+			document.getElementById('qimc').readOnly = true;
+			document.getElementById('qimc').type="hidden";
+			document.getElementById('labqimc').style.display = "none";
+		} else {
+			document.getElementById('qimc').readOnly = false;
+			document.getElementById('qimc').type="number";
+			document.getElementById('labqimc').style.display = "";
+		}
 	},
 
 	salvarRegistro: function() {
@@ -210,12 +220,14 @@ var app = {
 		var registres = this.model.registres;
 		var registresDivs = '';
 		
+		var ultimc = document.getElementById('lista-imc-cab');
 		textoIMC = "";
 		if ( registres.length > 0 ){
-			textoIMC = "<div class='lista-imc-cab'><span class=''> IMC <i>último</i>: <b>" + CalcularIMCtexto(registres[0].qimc) + "</b></span>" + CalcularIMCimg(registres[0].qimc) + "</div>" ;
+			textoIMC = "<div class='lista-imc-cab'><span class=''> <i>Ultimo</i> IMC : <b>" + CalcularIMCtexto(registres[0].qimc) + "</b></span>" + CalcularIMCimg(registres[0].qimc) + "</div>" ;
 		}
+		ultimc.innerHTML = textoIMC;
 		
-		registresDivs = textoIMC + "<table class='tabla' id='tabla'>";
+		registresDivs = "<table class='tabla' id='tabla'>";
 		registresDivs = registresDivs + "<tr><th>Fecha</th><th>Peso<br><small>(kg)</small></th><th>IMC.</th><th>Cintura<br><small>(cm)</small></th></tr>";
 		
 		for (var i in registres) {
