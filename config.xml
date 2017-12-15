@@ -50,7 +50,7 @@
     -->
     <access origin="*" />
 
-<preference name =" AndroidPersistentFileLocation "value =" Compatibility "/>
+<preference name ="AndroidPersistentFileLocation" value ="Compatibility" />
 	
     <!-- Plugins -->
     <!-- Core plugins -->
