@@ -76,13 +76,13 @@ td {
 }
 
 .lista-imc-cab {
-  margin: 3px 2px 10px 2px; /* Exterior: arriba derecha abajo izquierda */
+  margin: 1px 2px 15px 2px; /* Exterior: arriba derecha abajo izquierda */
   padding: 5px 2px 5px 2px;  /* Interior: arriba derecha abajo izquierda */
   display: flex;
   justify-content: center;
   align-items: center;
   color: MediumBlue;  /* RoyalBlue */
-  background-color: AliceBlue;
+  background-color: ; /* MintCream AliceBlue */
 }
 
 .lista-registros {
