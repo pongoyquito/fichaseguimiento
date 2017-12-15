@@ -36,8 +36,10 @@
 			<input class="qfecha" type="date" name="qfecha" id="qfecha" placeholder="dd/mm/aaaa" required />
 			<br>Peso:<br>
 			<input class="qpeso" type="number" name="qpeso" id="qpeso" placeholder="kg." required />
-			<br>IMC (Indice Masa Corporal):<br>
-			<input class="qimc" type="number" name="qimc" id="qimc" placeholder="Autocalculo con la altura." required />
+			
+			<label name="labqimc" id="labqimc" ><br>IMC (Indice Masa Corporal):<br></label>
+			<input class="qimc" type="number" name="qimc" id="qimc" placeholder="índice." required />
+			
 			<br>Perímetro Cintura:<br>
 			<input class="qcinta" type="number" name="qcinta" id="qcinta" placeholder="cm." required />
 			<br><br>
@@ -66,7 +68,10 @@
 		-->
 		
 		<!-- /-----/ Bloque: MOSTRAR datos cabecera. /-----/ -->
-		
+
+		<div id='lista-imc-cab'>
+		</div>
+
 		<div class="lista-cabeza-caja">
 			<table class='tabla-cabeza' id='tabla-cabeza'>
 				<tr>
@@ -87,15 +92,17 @@
 		<!-- /-----/ Bloque: Botones para las acciones de la Lista. /-----/ -->
 		
 		<div id="lista-botones-caja" class="lista-botones-caja">
-			<div id="lista-botonera" id="lista-botonera" >
+			<div id="lista-botonera" class="lista-botonera" >
 				<button class="BotonV" id="anadir">Añadir DATOS</button>
 				&nbsp &nbsp
 				<button class="BotonR" id="limpiar">Borrar TODO</button>
 			</div>
 		</div>
 
+
 		<div class="lista-botones-caja">
-			<img src="assets/lapiz12.png" width="22" height="22" > <span class="aviso"> &nbsp;: <b>'clic'</b> en la <b>linea</b> a <b>modificar</b>.</span>
+			<!-- <img src="assets/lapiz12.png" width="22" height="22" >  &nbsp;:   -->
+			<span class="aviso"><b>'' Toca ''</b> la <b>linea</b> que desees <b>modificar</b></span>
 		</div>
 
 		<!-- /-----/ Bloque: MOSTRAR Lista de registros. /-----/ -->
