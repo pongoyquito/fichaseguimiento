@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 
 <widget id="com.phonegap.ficha.de.seguimiento"
-		version="1.0.5" 
+		version="1.0.6" 
 		xmlns="http://www.w3.org/ns/widgets" 
 		xmlns:gap="http://phonegap.com/ns/1.0">
 		
@@ -49,9 +49,31 @@
         <access origin="*" /> - Etiqueta de acceso comodín: permite el acceso a todos los recursos externos.
     -->
     <access origin="*" />
-
- <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 	
+	<!--
+	La ubicación de almacenamiento persistente de Android ahora se establece de manera predeterminada en "Interna".
+	Compruebe el archivo README de este complemento para ver si su aplicación necesita algún cambio en su config.xml.
+	
+	Si esta es una nueva aplicación, no se requieren cambios.
+	Si se trata de una actualización de una aplicación existente que no especificó un "AndroidPersistentFileLocation",
+	es posible que deba agregar:
+		"<preference name =" AndroidPersistentFileLocation "value =" Compatibility "/>"
+	a config.xml para que la aplicación encuentre archivos almacenados previamente.
+	-->
+	
+	<preference name="AndroidPersistentFileLocation" value="Compatibility" />
+	<!--
+		Preferencias requeridas por GOOLGLE Console como nivel de seguridad API
+    -->
+	<preference name="android-minSdkVersion" value="15" />
+	<preference name="android-targetSdkVersion" value="26" />
+
+	<!--
+		Preferencias requeridas por GOOLGLE Console como nivel de seguridad API
+    -->
+	<preference name="android-minSdkVersion" value="15" />
+	<preference name="android-targetSdkVersion" value="26" />
+
     <!-- Plugins -->
     <!-- Core plugins -->
     <plugin name="cordova-plugin-file" spec="4.3.3" />
